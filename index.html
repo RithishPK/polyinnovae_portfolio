@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rithish P K — builds systems, breaks them</title>
-<meta name="description" content="Final-year CSBS student at NMIT. Builds AI systems and breaks them — ScamShield, Threat Prism pentesting, digital forensics.">
+<meta name="description" content="Final-year CSBS student at NMIT. Builds AI systems and breaks them — ScamShield, Ballast, Threat Prism pentesting, digital forensics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,6 +49,17 @@
   .btn:active { transform: translateY(1px); }
   .btn.primary { background: var(--signal); color: #1a1205; border-color: var(--signal); font-weight: 700; }
   .btn.primary:hover { background: var(--signal-d); border-color: var(--signal-d); }
+  /* featured hackathon build */
+  .featured { padding: 44px 0 60px; border-bottom: 1px solid var(--line); }
+  .featured-card { background: linear-gradient(135deg, rgba(240,169,43,0.07), var(--panel) 62%); border: 1px solid rgba(240,169,43,0.30); border-radius: 16px; padding: 28px 30px; }
+  .featured-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+  .featured-title { font-family: var(--sans); font-size: 24px; font-weight: 700; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .featured-sub { font-family: var(--mono); font-size: 12.5px; color: var(--dim); margin: 0; }
+  .live-badge { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--build); background: rgba(74,157,127,0.1); border: 1px solid rgba(74,157,127,0.35); padding: 5px 11px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--build); box-shadow: 0 0 6px var(--build); }
+  .fdesc { font-size: 15.5px; color: var(--muted); margin: 0 0 14px; max-width: 690px; }
+  .fstack { font-family: var(--mono); font-size: 11.5px; color: var(--dim); margin-bottom: 22px; }
+  .fbtn { font-size: 14px; }
   .section { padding: 64px 0; border-bottom: 1px solid var(--line); }
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
   .answer { font-size: 18px; line-height: 1.75; color: #dbe1ec; }
@@ -82,7 +93,7 @@
   .foot-links a { font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color .15s, border-color .15s; }
   .foot-links a:hover { color: var(--signal); border-color: var(--signal); }
   .foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
-  @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } .hero-top { gap: 18px; } .photo, .photo-fallback { width: 84px; height: 84px; } .hero { padding: 56px 0 48px; } }
+  @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } .hero-top { gap: 18px; } .photo, .photo-fallback { width: 84px; height: 84px; } .hero { padding: 56px 0 48px; } .featured-head { flex-direction: column; } .featured-card { padding: 22px 20px; } }
   .fade { opacity: 0; transform: translateY(10px); animation: rise .6s ease forwards; }
   .fade:nth-child(2) { animation-delay: .06s; }
   @keyframes rise { to { opacity: 1; transform: none; } }
@@ -120,6 +131,29 @@
       <a class="btn" href="https://www.linkedin.com/in/rithish-kushalappa" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </header>
+
+  <!-- ============ FEATURED HACKATHON BUILD ============ -->
+  <section class="featured">
+    <p class="eyebrow">featured build &middot; polyinnovae ai hackathon</p>
+    <div class="featured-card">
+      <div class="featured-head">
+        <div>
+          <h2 class="featured-title">Ballast &mdash; Procurement Trust Layer</h2>
+          <p class="featured-sub">Strait of Hormuz challenge</p>
+        </div>
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </div>
+      <p class="fdesc">
+        A procurement risk console for supply-shock scenarios: it risk-scores unfamiliar supplier
+        offers, invoices, and payment instructions &mdash; flagging gouging, phantom cargo, and
+        payment-diversion (BEC) scams before a business wires funds to a stranger. Applies the
+        ScamShield detection pattern to B2B procurement, with a full system architecture and
+        decision workflow.
+      </p>
+      <div class="fstack">Product design &middot; risk engine &middot; few-shot LLM classifier &middot; system architecture</div>
+      <a class="btn primary fbtn" href="https://ballast-procurement.vercel.app/" target="_blank" rel="noopener">View live project &#8599;</a>
+    </div>
+  </section>
 
   <section class="section" id="polymath">
     <p class="eyebrow">the question</p>
@@ -171,21 +205,6 @@
           real scam data I collected after being targeted myself.
         </p>
         <p class="stack">Python &middot; FastAPI &middot; Llama 3.3 70B &middot; EasyOCR &middot; Supabase (RLS) &middot; Render &middot; Netlify</p>
-      </article>
-
-      <article class="work">
-        <div class="work-head">
-          <h3><a href="https://ballast-procurement.vercel.app/" target="_blank" rel="noopener">Ballast &mdash; Procurement Trust Layer &#8599;</a></h3>
-          <span class="tag build">build</span>
-        </div>
-        <p>
-          A procurement risk console for supply-shock scenarios: it risk-scores unfamiliar
-          supplier offers, invoices, and payment instructions &mdash; flagging gouging, phantom cargo,
-          and payment-diversion (BEC) scams before a business wires funds to a stranger. Built for
-          the Polyinnovae AI Hackathon (Strait of Hormuz challenge); applies the ScamShield
-          detection pattern to B2B procurement, with a full system architecture and decision workflow.
-        </p>
-        <p class="stack">Product design &middot; risk engine &middot; few-shot LLM classifier &middot; system architecture</p>
       </article>
 
       <article class="work">
