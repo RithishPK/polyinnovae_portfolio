@@ -3,437 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rithish P K - builds systems, breaks them</title>
+<title>Rithish P K — builds systems, breaks them</title>
 <meta name="description" content="Final-year CSBS student at NMIT. Builds AI systems and breaks them — ScamShield, Threat Prism pentesting, digital forensics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:      #0c0f17;   /* deep ink-slate background */
-    --panel:    #12161f;   /* raised panel */
-    --panel-2:  #171c27;   /* hover / nested */
-    --line:     #232a38;   /* hairline borders */
-    --text:     #e7ebf2;   /* primary text */
-    --muted:    #8b95a7;   /* secondary text */
-    --dim:      #5c657a;   /* labels, captions */
-    --signal:   #f0a92b;   /* amber signal accent */
-    --signal-d: #c8871c;   /* amber pressed */
-    --build:    #4a9d7f;   /* build side (green-teal, muted) */
-    --break:    #d9694a;   /* break side (clay-red, muted) */
+    --ink:      #0c0f17;
+    --panel:    #12161f;
+    --panel-2:  #171c27;
+    --line:     #232a38;
+    --text:     #e7ebf2;
+    --muted:    #8b95a7;
+    --dim:      #5c657a;
+    --signal:   #f0a92b;
+    --signal-d: #c8871c;
+    --build:    #4a9d7f;
+    --break:    #d9694a;
     --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     --sans: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
-
-  body {
-    margin: 0;
-    background: var(--ink);
-    color: var(--text);
-    font-family: var(--sans);
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* subtle grid texture, like an instrument panel */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    opacity: 0.15;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 840px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ---- eyebrow labels: read like log/section markers (true to security work) ---- */
-  .eyebrow {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--dim);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 20px;
-  }
-  .eyebrow::before {
-    content: "";
-    width: 8px; height: 8px;
-    background: var(--signal);
-    border-radius: 50%;
-    box-shadow: 0 0 0 3px rgba(240,169,43,0.15);
-  }
-
-  /* ---------- HERO ---------- */
-  .hero {
-    padding: 88px 0 64px;
-    border-bottom: 1px solid var(--line);
-  }
-  .hero-top {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    margin-bottom: 40px;
-  }
-  .photo {
-    width: 104px;
-    height: 104px;
-    border-radius: 14px;
-    object-fit: cover;
-    border: 1px solid var(--line);
-    background: var(--panel-2);
-    flex-shrink: 0;
-  }
-  .photo-fallback {
-    width: 104px; height: 104px;
-    border-radius: 14px;
-    border: 1px dashed var(--line);
-    background: var(--panel);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--dim);
-    text-align: center;
-    padding: 8px;
-    flex-shrink: 0;
-  }
-  .hero-id .name {
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--muted);
-    margin: 0 0 4px;
-    letter-spacing: 0.02em;
-  }
-  .hero-id .loc {
-    font-family: var(--mono);
-    font-size: 12.5px;
-    color: var(--dim);
-    margin: 0;
-  }
-  h1 {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: clamp(34px, 6vw, 56px);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    margin: 0 0 24px;
-  }
+  body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--sans); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  body::before { content: ""; position: fixed; inset: 0; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 64px 64px; opacity: 0.15; pointer-events: none; z-index: 0; }
+  .wrap { position: relative; z-index: 1; max-width: 840px; margin: 0 auto; padding: 0 24px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); display: flex; align-items: center; gap: 10px; margin: 0 0 20px; }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; background: var(--signal); border-radius: 50%; box-shadow: 0 0 0 3px rgba(240,169,43,0.15); }
+  .hero { padding: 88px 0 64px; border-bottom: 1px solid var(--line); }
+  .hero-top { display: flex; align-items: center; gap: 28px; margin-bottom: 40px; }
+  .photo { width: 104px; height: 104px; border-radius: 14px; object-fit: cover; border: 1px solid var(--line); background: var(--panel-2); flex-shrink: 0; }
+  .photo-fallback { width: 104px; height: 104px; border-radius: 14px; border: 1px dashed var(--line); background: var(--panel); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; color: var(--dim); text-align: center; padding: 8px; flex-shrink: 0; }
+  .hero-id .name { font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--muted); margin: 0 0 4px; letter-spacing: 0.02em; }
+  .hero-id .loc { font-family: var(--mono); font-size: 12.5px; color: var(--dim); margin: 0; }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: clamp(34px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 24px; }
   h1 .b1 { color: var(--build); }
   h1 .b2 { color: var(--break); }
-  h1 .swap {
-    color: var(--signal);
-    font-family: var(--mono);
-    font-weight: 400;
-    font-size: 0.7em;
-    vertical-align: middle;
-    padding: 0 4px;
-  }
-  .lede {
-    font-size: 18px;
-    color: var(--muted);
-    max-width: 640px;
-    margin: 0 0 32px;
-  }
+  h1 .swap { color: var(--signal); font-family: var(--mono); font-weight: 400; font-size: 0.7em; vertical-align: middle; padding: 0 4px; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 640px; margin: 0 0 32px; }
   .lede strong { color: var(--text); font-weight: 600; }
-
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .btn {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 11px 18px;
-    border-radius: 8px;
-    border: 1px solid var(--line);
-    color: var(--text);
-    background: var(--panel);
-    transition: border-color .15s, background .15s, transform .05s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { font-family: var(--mono); font-size: 13px; font-weight: 500; text-decoration: none; padding: 11px 18px; border-radius: 8px; border: 1px solid var(--line); color: var(--text); background: var(--panel); transition: border-color .15s, background .15s, transform .05s; display: inline-flex; align-items: center; gap: 8px; }
   .btn:hover { border-color: var(--dim); background: var(--panel-2); }
   .btn:active { transform: translateY(1px); }
-  .btn.primary {
-    background: var(--signal);
-    color: #1a1205;
-    border-color: var(--signal);
-    font-weight: 700;
-  }
+  .btn.primary { background: var(--signal); color: #1a1205; border-color: var(--signal); font-weight: 700; }
   .btn.primary:hover { background: var(--signal-d); border-color: var(--signal-d); }
-
-  /* ---------- SECTIONS ---------- */
-  .section {
-    padding: 64px 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 28px;
-  }
-
-  /* answer block — this is the whole point of the screen, so it gets weight */
-  .answer {
-    font-size: 18px;
-    line-height: 1.75;
-    color: #dbe1ec;
-  }
-  .answer::first-letter {
-    /* subtle emphasis, not a drop cap */
-    color: var(--text);
-  }
-  .answer-meta {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--dim);
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  /* video */
-  .video-shell {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 12px;
-  }
-  video {
-    width: 100%;
-    border-radius: 8px;
-    display: block;
-    background: #000;
-    aspect-ratio: 16 / 9;
-  }
-  .video-note {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--signal-d);
-    margin: 12px 4px 2px;
-  }
-
-  /* work grid */
-  .work-grid {
-    display: grid;
-    gap: 16px;
-  }
-  .work {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 22px 24px;
-    transition: border-color .15s, background .15s;
-  }
+  .section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+  .answer { font-size: 18px; line-height: 1.75; color: #dbe1ec; }
+  .answer::first-letter { color: var(--text); }
+  .answer-meta { font-family: var(--mono); font-size: 11.5px; color: var(--dim); margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .video-shell { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+  video { width: 100%; border-radius: 8px; display: block; background: #000; aspect-ratio: 16 / 9; }
+  .video-note { font-family: var(--mono); font-size: 11.5px; color: var(--signal-d); margin: 12px 4px 2px; }
+  .work-grid { display: grid; gap: 16px; }
+  .work { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; transition: border-color .15s, background .15s; }
   .work:hover { border-color: var(--dim); background: var(--panel-2); }
-  .work-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 6px;
-  }
-  .work h3 {
-    font-family: var(--sans);
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-  }
+  .work-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+  .work h3 { font-family: var(--sans); font-size: 18px; font-weight: 600; margin: 0; }
   .work h3 a { color: var(--text); text-decoration: none; }
   .work h3 a:hover { color: var(--signal); }
-  .tag {
-    font-family: var(--mono);
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 5px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+  .tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 9px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; }
   .tag.build { color: var(--build); border: 1px solid rgba(74,157,127,0.35); background: rgba(74,157,127,0.08); }
   .tag.break { color: var(--break); border: 1px solid rgba(217,105,74,0.35); background: rgba(217,105,74,0.08); }
-  .work p {
-    color: var(--muted);
-    font-size: 14.5px;
-    margin: 0 0 12px;
-  }
-  .stack {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--dim);
-  }
-
-  /* skills */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  .skill-col h4 {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--signal);
-    margin: 0 0 8px;
-  }
-  .skill-col p {
-    font-size: 13.5px;
-    color: var(--muted);
-    margin: 0;
-  }
-
-  /* achievements */
-  .ach {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 12px;
-  }
-  .ach li {
-    font-size: 14.5px;
-    color: var(--muted);
-    padding-left: 22px;
-    position: relative;
-  }
-  .ach li::before {
-    content: "▸";
-    position: absolute;
-    left: 0;
-    color: var(--signal);
-  }
+  .work p { color: var(--muted); font-size: 14.5px; margin: 0 0 12px; }
+  .stack { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .skill-col h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--signal); margin: 0 0 8px; }
+  .skill-col p { font-size: 13.5px; color: var(--muted); margin: 0; }
+  .ach { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .ach li { font-size: 14.5px; color: var(--muted); padding-left: 22px; position: relative; }
+  .ach li::before { content: "\25B8"; position: absolute; left: 0; color: var(--signal); }
   .ach strong { color: var(--text); font-weight: 600; }
-
-  .section-title {
-    font-family: var(--sans);
-    font-size: 22px;
-    font-weight: 600;
-    margin: 0 0 24px;
-    letter-spacing: -0.01em;
-  }
-
-  /* footer */
-  footer {
-    padding: 56px 0 72px;
-  }
-  .foot-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-  .foot-links a {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--muted);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color .15s, border-color .15s;
-  }
+  .section-title { font-family: var(--sans); font-size: 22px; font-weight: 600; margin: 0 0 24px; letter-spacing: -0.01em; }
+  footer { padding: 56px 0 72px; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; }
+  .foot-links a { font-family: var(--mono); font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color .15s, border-color .15s; }
   .foot-links a:hover { color: var(--signal); border-color: var(--signal); }
-  .foot-note {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--dim);
-  }
-
-  @media (max-width: 560px) {
-    .skills-grid { grid-template-columns: 1fr; }
-    .hero-top { gap: 18px; }
-    .photo, .photo-fallback { width: 84px; height: 84px; }
-    .hero { padding: 56px 0 48px; }
-  }
-
-  /* entrance — quiet, single pass, respects reduced motion */
+  .foot-note { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+  @media (max-width: 560px) { .skills-grid { grid-template-columns: 1fr; } .hero-top { gap: 18px; } .photo, .photo-fallback { width: 84px; height: 84px; } .hero { padding: 56px 0 48px; } }
   .fade { opacity: 0; transform: translateY(10px); animation: rise .6s ease forwards; }
   .fade:nth-child(2) { animation-delay: .06s; }
   @keyframes rise { to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) {
-    .fade { animation: none; opacity: 1; transform: none; }
-    html { scroll-behavior: auto; }
-  }
-
-  a:focus-visible, .btn:focus-visible {
-    outline: 2px solid var(--signal);
-    outline-offset: 2px;
-  }
+  @media (prefers-reduced-motion: reduce) { .fade { animation: none; opacity: 1; transform: none; } html { scroll-behavior: auto; } }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <!-- ============ HERO ============ -->
   <header class="hero">
     <div class="hero-top fade">
-      <!-- PHOTO: drop your headshot at assets/photo.jpg -->
       <img class="photo" src="assets/photo.jpg" alt="Rithish P K"
            onerror="this.outerHTML='&lt;div class=&quot;photo-fallback&quot;&gt;photo.jpg&lt;br&gt;goes here&lt;/div&gt;'">
       <div class="hero-id">
         <p class="name">Rithish P K</p>
-        <p class="loc">CSBS · NMIT Bengaluru · grad 2027</p>
+        <p class="loc">CSBS &middot; NMIT Bengaluru &middot; grad 2027</p>
       </div>
     </div>
-
     <h1 class="fade">
       I <span class="b1">build</span> systems
-      <span class="swap">⇄</span>
+      <span class="swap">&#8644;</span>
       and <span class="b2">break</span> them.
     </h1>
-
     <p class="lede fade">
       Final-year Computer Science &amp; Business Systems student working across
       <strong>AI systems</strong> and <strong>offensive security</strong>. I ship products,
-      then pentest them — because the instinct that makes me want to build a thing
+      then pentest them &mdash; because the instinct that makes me want to build a thing
       is the same one that asks how it fails.
     </p>
-
     <div class="cta-row fade">
-      <a class="btn primary" href="#video">▶ Watch intro</a>
-      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">↓ Résumé (PDF)</a>
+      <a class="btn primary" href="#video">&#9654; Watch intro</a>
+      <a class="btn" href="resume.pdf" target="_blank" rel="noopener">&#8595; R&eacute;sum&eacute; (PDF)</a>
       <a class="btn" href="https://github.com/RithishPK" target="_blank" rel="noopener">GitHub</a>
       <a class="btn" href="https://www.linkedin.com/in/rithish-kushalappa" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </header>
 
-  <!-- ============ POLYMATH ANSWER ============ -->
   <section class="section" id="polymath">
     <p class="eyebrow">the question</p>
     <h2 class="section-title">What makes you want to build like a polymath?</h2>
     <div class="card">
-      <!-- Swap the text inside this block anytime; keep the class. -->
       <div class="answer">
         What reshaped how I build wasn't technical. After months of dodging fake
         internship offers and watching classmates get scammed, I understood the con
-        isn't a code exploit — it's a psychology exploit. Scammers weaponize urgency,
+        isn't a code exploit &mdash; it's a psychology exploit. Scammers weaponize urgency,
         greed, and the fear of missing a rare opening, and technical literacy won't
         protect you if you can't see the manipulation. That reframed the problem: to
         detect scams I had to think like a behavioral analyst, not just an engineer.
@@ -442,12 +137,11 @@
       </div>
       <div class="answer-meta">
         <span>100 words</span>
-        <span>psychology → security → product</span>
+        <span>psychology &rarr; security &rarr; product</span>
       </div>
     </div>
   </section>
 
-  <!-- ============ VIDEO ============ -->
   <section class="section" id="video">
     <p class="eyebrow">60-second intro</p>
     <h2 class="section-title">Who I am, in a minute</h2>
@@ -457,10 +151,9 @@
         Your browser can't play embedded video.
       </video>
     </div>
-    <p class="video-note">▸My Introduction</video></p>
+    <p class="video-note">&#9656; Drop your 1-min clip at assets/intro.mp4 &mdash; or tell Claude to swap this for a YouTube embed.</p>
   </section>
 
-  <!-- ============ SELECTED WORK ============ -->
   <section class="section" id="work">
     <p class="eyebrow">selected work</p>
     <h2 class="section-title">The build / break span</h2>
@@ -468,7 +161,7 @@
 
       <article class="work">
         <div class="work-head">
-          <h3><a href="https://thescamshield.netlify.app" target="_blank" rel="noopener">ScamShield — AI Job-Scam Detector ↗</a></h3>
+          <h3><a href="https://thescamshield.netlify.app" target="_blank" rel="noopener">ScamShield &mdash; AI Job-Scam Detector &#8599;</a></h3>
           <span class="tag build">build</span>
         </div>
         <p>
@@ -477,21 +170,36 @@
           Community threat feed, scan history, and a fraud-scoped chat assistant. Built from
           real scam data I collected after being targeted myself.
         </p>
-        <p class="stack">Python · FastAPI · Llama 3.3 70B · EasyOCR · Supabase (RLS) · Render · Netlify</p>
+        <p class="stack">Python &middot; FastAPI &middot; Llama 3.3 70B &middot; EasyOCR &middot; Supabase (RLS) &middot; Render &middot; Netlify</p>
       </article>
 
       <article class="work">
         <div class="work-head">
-          <h3>Android Pentesting &amp; Windows Forensics — Threat Prism</h3>
+          <h3><a href="https://ballast-procurement.vercel.app/" target="_blank" rel="noopener">Ballast &mdash; Procurement Trust Layer &#8599;</a></h3>
+          <span class="tag build">build</span>
+        </div>
+        <p>
+          A procurement risk console for supply-shock scenarios: it risk-scores unfamiliar
+          supplier offers, invoices, and payment instructions &mdash; flagging gouging, phantom cargo,
+          and payment-diversion (BEC) scams before a business wires funds to a stranger. Built for
+          the Polyinnovae AI Hackathon (Strait of Hormuz challenge); applies the ScamShield
+          detection pattern to B2B procurement, with a full system architecture and decision workflow.
+        </p>
+        <p class="stack">Product design &middot; risk engine &middot; few-shot LLM classifier &middot; system architecture</p>
+      </article>
+
+      <article class="work">
+        <div class="work-head">
+          <h3>Android Pentesting &amp; Windows Forensics &mdash; Threat Prism</h3>
           <span class="tag break">break</span>
         </div>
         <p>
-          Pentested InsecureBankv2 against the OWASP Mobile Top 5 — surfaced insecure
+          Pentested InsecureBankv2 against the OWASP Mobile Top 5 &mdash; surfaced insecure
           storage, cleartext HTTP, auth bypass via ADB intent spoofing, and weak AES-CBC with
           hardcoded keys. Ran forensic analysis on a Windows 10 image in Autopsy, identifying
           credential-dumping tooling and a Zerologon exploit archive from browser and PowerShell artifacts.
         </p>
-        <p class="stack">Burp Suite · MobSF · JADX · Frida · Autopsy 4.18 · ADB</p>
+        <p class="stack">Burp Suite &middot; MobSF &middot; JADX &middot; Frida &middot; Autopsy 4.18 &middot; ADB</p>
       </article>
 
       <article class="work">
@@ -504,7 +212,7 @@
           imbalanced card-transaction data (&lt;1% fraud), with a real-time inference sandbox
           using RobustScaler to classify custom transaction profiles against outliers.
         </p>
-        <p class="stack">Python · Scikit-learn · RobustScaler · Streamlit</p>
+        <p class="stack">Python &middot; Scikit-learn &middot; RobustScaler &middot; Streamlit</p>
       </article>
 
       <article class="work">
@@ -517,49 +225,34 @@
           hyperspectral imagery, with Grad-CAM explainability. Evaluated on San Diego and
           Pavia benchmarks using AUC-ROC.
         </p>
-        <p class="stack">Python · PyTorch · CNN-Transformer · XAI / Grad-CAM</p>
+        <p class="stack">Python &middot; PyTorch &middot; CNN-Transformer &middot; XAI / Grad-CAM</p>
       </article>
 
     </div>
   </section>
 
-  <!-- ============ RANGE (skills) ============ -->
   <section class="section" id="range">
     <p class="eyebrow">range</p>
     <h2 class="section-title">What I work with</h2>
     <div class="skills-grid">
-      <div class="skill-col">
-        <h4>Languages</h4>
-        <p>Python, Java, JavaScript, Scala, SQL</p>
-      </div>
-      <div class="skill-col">
-        <h4>AI / ML / DL</h4>
-        <p>PyTorch, TensorFlow, Scikit-learn, CNN, ANN, Transformers, few-shot prompting</p>
-      </div>
-      <div class="skill-col">
-        <h4>Security</h4>
-        <p>Burp Suite, MobSF, Frida, JADX, Autopsy, digital forensics, phishing simulation</p>
-      </div>
-      <div class="skill-col">
-        <h4>Build &amp; Deploy</h4>
-        <p>FastAPI, Streamlit, REST, Supabase/PostgreSQL, Docker, GCP, AWS EC2, Render, Netlify</p>
-      </div>
+      <div class="skill-col"><h4>Languages</h4><p>Python, Java, JavaScript, Scala, SQL</p></div>
+      <div class="skill-col"><h4>AI / ML / DL</h4><p>PyTorch, TensorFlow, Scikit-learn, CNN, ANN, Transformers, few-shot prompting</p></div>
+      <div class="skill-col"><h4>Security</h4><p>Burp Suite, MobSF, Frida, JADX, Autopsy, digital forensics, phishing simulation</p></div>
+      <div class="skill-col"><h4>Build &amp; Deploy</h4><p>FastAPI, Streamlit, REST, Supabase/PostgreSQL, Docker, GCP, AWS EC2, Render, Netlify</p></div>
     </div>
   </section>
 
-  <!-- ============ SIGNAL (achievements) ============ -->
   <section class="section" id="signal">
     <p class="eyebrow">signal</p>
     <h2 class="section-title">Where it's been tested</h2>
     <ul class="ach">
-      <li><strong>Top 21 nationwide</strong> (Top 7 in Tech-for-Impact) out of 600+ teams — Student Innovation &amp; Product Summit 2026, <strong>IIM Bangalore</strong>.</li>
-      <li>Final rounds of <strong>HackArena 2.0</strong> and <strong>ET AI Hackathon</strong> — top 500 nationally.</li>
+      <li><strong>Top 21 nationwide</strong> (Top 7 in Tech-for-Impact) out of 600+ teams &mdash; Student Innovation &amp; Product Summit 2026, <strong>IIM Bangalore</strong>.</li>
+      <li>Final rounds of <strong>HackArena 2.0</strong> and <strong>ET AI Hackathon</strong> &mdash; top 500 nationally.</li>
       <li>Certified: <strong>Oracle Cloud AI Foundations</strong>, <strong>Microsoft SC-900</strong>, Google Cloud Engineering (ACE), Cisco Networking &amp; OS Basics.</li>
-      <li><strong>Documentation Lead &amp; Core Member</strong>, DataWiz NMIT · Vice Class Representative, CSBS.</li>
+      <li><strong>Documentation Lead &amp; Core Member</strong>, DataWiz NMIT &middot; Vice Class Representative, CSBS.</li>
     </ul>
   </section>
 
-  <!-- ============ FOOTER ============ -->
   <footer>
     <p class="eyebrow">get in touch</p>
     <div class="foot-links">
@@ -568,7 +261,7 @@
       <a href="https://github.com/RithishPK" target="_blank" rel="noopener">github.com/RithishPK</a>
       <a href="https://www.linkedin.com/in/rithish-kushalappa" target="_blank" rel="noopener">linkedin.com/in/rithish-kushalappa</a>
     </div>
-    <p class="foot-note">Built for the Polyinnovae AI Hackathon · Bengaluru, India</p>
+    <p class="foot-note">Built for the Polyinnovae AI Hackathon &middot; Bengaluru, India</p>
   </footer>
 
 </div>
